@@ -1,17 +1,13 @@
 package domain;
 
-import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
 import javax.persistence.Column;
-import javax.persistence.FetchType;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import java.util.Date;
-
-import static javax.persistence.FetchType.*;
 
 /**
  * Created by zsq on 16/12/2.
