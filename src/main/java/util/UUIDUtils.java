@@ -13,7 +13,7 @@ public class UUIDUtils {
         return uuid;
     }
 
-    public static  void main(String []a) {
+    public static void main(String[] args) {
 
         System.out.print(Utils.md5(UUIDUtils.getUUID()));
     }
