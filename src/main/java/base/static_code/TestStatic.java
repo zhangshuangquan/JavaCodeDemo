@@ -3,6 +3,9 @@ package base.static_code;
 /**
  * Created by zsq on 2017/2/17.
  * 静态代码块测试
+ * 在类加载时,jvm首先对static变量 或 static 静态代码块 完成内存分配.
+ * 并且static修饰的变量, 方法 和 代码块在整个系统运行期间只创建一次. 不会被gc 回收,
+ * 直到整个系统停止.
  */
 public class TestStatic {
 
