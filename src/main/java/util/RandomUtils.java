@@ -1,6 +1,8 @@
 package util;
 
 import java.util.Random;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.UUID;
 
 /**
@@ -94,8 +96,44 @@ public class RandomUtils {
                 + uuid.substring(24);
     }
 
+    static Random ran = new Random();
+    static SortedSet set = new TreeSet();
+
+    public static void randomSet(int n, int m) {
+        for (int i = 0; i < n; i++) {
+            set.add(ran.nextInt(7) + 1);
+        }
+        if (set.size() < m) {
+            randomSet(m - set.size(), m);
+        }
+    }
+
+
+
     public static void main(String[] args) {
         System.out.println(System.nanoTime());
         System.out.println(System.currentTimeMillis());
+
+        randomSet(3, 3);
+        System.out.print(set);
+        System.out.println(" "+set.size());
+
+        System.out.println(ran.nextInt(6)+1);
+        System.out.println(ran.nextInt(6)+1);
+        System.out.println(ran.nextInt(5)+1);
+
+        int count = 0;
+        int i = 0;
+        int j = 0;
+        int m = 0;
+       do {
+           i = ran.nextInt(10)+1;
+           j = ran.nextInt(10)+1;
+           m = ran.nextInt(10)+1;
+           count = i+j+m;
+       } while(count != 10);
+        System.out.println(i);
+        System.out.println(j);
+        System.out.println(m);
     }
 }
