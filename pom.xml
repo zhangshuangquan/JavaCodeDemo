@@ -105,6 +105,40 @@
             <version>1.4.7</version>
         </dependency>
 
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+
+        <!-- lucene  start  -->
+
+        <!-- lucene core -->
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-core</artifactId>
+            <version>6.3.0</version>
+        </dependency>
+
+        <!--lucene 查询解析包-->
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-queryparser</artifactId>
+            <version>6.3.0</version>
+        </dependency>
+
+        <!--lucene 解析包 -->
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-analyzers-common</artifactId>
+            <version>6.3.0</version>
+        </dependency>
+
+        <!--   lucene  end    -->
+
+
+
+
 
     </dependencies>
 
