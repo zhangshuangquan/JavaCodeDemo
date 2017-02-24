@@ -27,7 +27,7 @@ public class SearchPage {
         int currentPage = 2;   //当前页
         int pageSize = 3;     //每页显示条数
 
-        Page<Document> page = null;
+        Page<Document> page;
         try {
             page = pageQuery(fieldName, queryString, directoryPath, currentPage, pageSize);
             showData(page);
@@ -136,7 +136,7 @@ public class SearchPage {
         if(topDocs == null || topDocs.scoreDocs == null || topDocs.scoreDocs.length == 0) {
             return 0;
         }
-       //ScoreDoc[] docs = topDocs.scoreDocs;  //docs.length  或者  可以直接返回 topDocs.totalHits
+        //ScoreDoc[] docs = topDocs.scoreDocs;  //docs.length  或者  可以直接返回 topDocs.totalHits
         return topDocs.totalHits;
     }
 
