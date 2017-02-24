@@ -36,6 +36,10 @@ public class SearchPage {
         }
     }
 
+    /**
+     * 数据展示
+     * @param page
+     */
     public static void showData(Page<Document> page){
         if(page == null || page.getItems() == null || page.getItems().size() == 0) {
             System.out.println("no results found.");
