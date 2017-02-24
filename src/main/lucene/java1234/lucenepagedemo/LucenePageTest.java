@@ -80,6 +80,14 @@ public class LucenePageTest {
         //获取上一页的最后一个元素
         ScoreDoc LastScoreDoc = getLastScoreDoc(pageIndex, pageSize, query, indexSearcher);
 
+        /**
+         * 如果有排序 getLastScoreDoc() 和 searchAfter() 中 都必须 加入sort
+         */
+        //Sort sort = new Sort();
+        //sort.setSort(new SortField("id", SortField.Type.INT, true));
+        //TopDocs hits = indexSearcher.searchAfter(LastScoreDoc, query, pageSize, sort);
+
+
         TopDocs hits = indexSearcher.searchAfter(LastScoreDoc, query, pageSize);
         Document doc;
         for (ScoreDoc scoreDoc : hits.scoreDocs) {
@@ -104,6 +112,11 @@ public class LucenePageTest {
             return null;
         }
         int num = (pageIndex - 1) * pageSize;  // 获取上一页的数量
+
+        //Sort sort = new Sort();
+        //sort.setSort(new SortField("id", SortField.Type.INT, true));
+        //TopDocs hits = indexSearcher.search(query, num, sort);  //查询返回上一页的数据
+
         TopDocs hits = indexSearcher.search(query, num);  //查询返回上一页的数据
         int total = hits.totalHits;
         if (num > total) {
@@ -116,7 +129,7 @@ public class LucenePageTest {
         try {
             LucenePageTest.searchPage("南京", 1, 2);
             System.out.println("--------- searchAfter() ----------");
-            LucenePageTest.searchPageByAfter("城市", 4, 2);
+            LucenePageTest.searchPageByAfter("城市", 1, 2);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {

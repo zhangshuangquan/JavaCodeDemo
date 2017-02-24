@@ -4,11 +4,13 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.SortedDocValuesField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.util.BytesRef;
 
 import java.io.File;
 import java.io.FileReader;
@@ -76,15 +78,23 @@ public class Indexer {
      */
     private Document getDocument(File f) throws IOException {
         Document doc = new Document();
+        /*FileReader fileReader = new FileReader(f);
+        int ch = 0;  //读取 fileReader 中的字符
+        while ((ch = fileReader.read()) != -1) {
+            System.out.println((char)ch);
+        }
+        fileReader.close();*/
+
         //在文档对象中 写入 要索引的字段
         doc.add(new TextField("contents", new FileReader(f))); //文件内容
         doc.add(new TextField("fileName", f.getName(), Field.Store.YES)); //文件名
         doc.add(new TextField("fullPath", f.getCanonicalPath(), Field.Store.YES)); //文件全路径名
+        doc.add(new SortedDocValuesField("fileName", new BytesRef(f.getName())));  //添加要排序的字段 字符型
         return doc;
     }
 
     public static void main(String[] args) {
-        String indexDir = "/Users/zsq/lucene";  //mac pro path
+        String indexDir = "/Users/zsq/lucene/index";  //mac pro path
         String dataDir = "/Users/zsq/lucene/data";
         Indexer indexer = null;
         int numIndex = 0;

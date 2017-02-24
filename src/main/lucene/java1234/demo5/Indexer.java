@@ -1,10 +1,7 @@
 package java1234.demo5;
 
 import org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.StringField;
-import org.apache.lucene.document.TextField;
+import org.apache.lucene.document.*;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
@@ -54,6 +51,7 @@ public class Indexer {
             doc.add(new TextField("id", ids[i].toString(), Field.Store.YES));
             doc.add(new StringField("city", citys[i], Field.Store.YES));
             doc.add(new TextField("desc", descs[i], Field.Store.YES));
+            doc.add(new NumericDocValuesField("id", ids[i]));  //添加要排序的字段
             writer.addDocument(doc);
         }
         writer.close();

@@ -7,10 +7,7 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.search.*;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
@@ -25,7 +22,7 @@ public class Searcher {
 
 
     public static void main(String[] args) {
-        String indexDir = "/Users/zsq/lucene";
+        String indexDir = "/Users/zsq/lucene/index";
         String q = "lucene";
         try {
             search(indexDir, q);
@@ -47,7 +44,13 @@ public class Searcher {
         QueryParser queryParser = new QueryParser("contents", analyzer); //查询分析器
         Query query = queryParser.parse(q);  //对关键字的解析
         long start = System.currentTimeMillis();
-        TopDocs hits = indexSearcher.search(query, 10);  //查询到的结果,返回前10
+
+        //排序
+        Sort sort = new Sort();
+        sort.setSort(new SortField("fileName", SortField.Type.STRING, false));
+        TopDocs hits = indexSearcher.search(query, 10, sort);
+
+        //TopDocs hits = indexSearcher.search(query, 10);  //查询到的结果,返回前10
         long end = System.currentTimeMillis();
         System.out.println("查询关键字:"+q+" 消耗时间:"+(end-start)+" ms "+"命中个数:"+hits.totalHits);
         Document doc;

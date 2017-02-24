@@ -20,7 +20,7 @@ import java.nio.file.Paths;
  * Created by zsq on 2017/2/22.
  * 中文分词  和 高亮显示
  */
-public class SearchTest {
+public class SearchHighlightTest {
 
     public static void search(String indexDir, String q) throws IOException, ParseException, InvalidTokenOffsetsException {
         Directory dir = FSDirectory.open(Paths.get(indexDir));
@@ -29,15 +29,36 @@ public class SearchTest {
 
         SmartChineseAnalyzer analyzer = new SmartChineseAnalyzer(); // 中文分词器
         String searchField = "desc";
+
         //查询分析器
         QueryParser queryParser = new QueryParser(searchField, analyzer);
         Query query = queryParser.parse(q);
-        //TopDocs hits = indexSearcher.search(query, 10);
 
-        // lucene 分页
-        TopScoreDocCollector results = TopScoreDocCollector.create(10);// 结果集
-        indexSearcher.search(query, results);// 查询前100条
-        TopDocs hits = results.topDocs(1, 2);// 从结果集中第1条开始取2条
+        /*
+         * 排序  true 为降序排列   false 为升序排列
+         *
+         * 需要在添加文档的时候, 把要排序的字段添加进去, 不然报错.
+         * doc.add(new NumericDocValuesField("id", ids[i]));
+         * NumericDocValuesField 为专用的排序字段 数字型
+         *
+         * 会报错如下:
+         * java.lang.IllegalStateException: unexpected docvalues type NONE for field 'id' (expected=NUMERIC). Re-index with correct docvalues type.
+         *
+         *
+         * 按字符串排序 SortedDocValuesField
+          * doc.add(new SortedDocValuesField("fileName", new BytesRef(f.getName()))); 添加排序字段
+          * Sort sort = new Sort();
+          * sort.setSort(new SortField("fileName", SortField.Type.STRING, false));
+         */
+        Sort sort = new Sort();
+        sort.setSort(new SortField("id", SortField.Type.INT, true));
+
+        TopDocs hits = indexSearcher.search(query, 10, sort);
+
+        // lucene 分页  查不到匹配数据  建议使用 searchAfter()
+        //TopScoreDocCollector results = TopScoreDocCollector.create(10);// 结果集
+        //indexSearcher.search(query, results);// 查询前100条
+        //TopDocs hits = results.topDocs(1, 2);// 从结果集中第1条开始取2条
 
 
         System.out.println("命中:"+hits.totalHits);
@@ -66,7 +87,7 @@ public class SearchTest {
 
     public static void main(String[] args) {
         String indexDir = "/Users/zsq/lucene/lucene6";
-        String q = "南京";
+        String q = "城市";
         try {
             search(indexDir, q);
         } catch (Exception e) {
