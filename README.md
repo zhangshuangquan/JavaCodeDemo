@@ -31,6 +31,7 @@ Lucene常用类
  （12）AttributeSource  TokenStream即是从Document的域（field）中或者查询条件中抽取一个个分词而组成的一个数据流。TokenSteam中是一个个的分词，而每个分词又是由一个个的属性（Attribute）组成。对于所有的分词来说，每个属性只有一个实例。这些属性都保存在AttributeSource中，而AttributeSource正是TokenStream的父类。
 
 
+
 ```
 package java1234.demo5;
 
