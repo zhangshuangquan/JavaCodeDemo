@@ -94,8 +94,8 @@ public class Indexer {
     }
 
     public static void main(String[] args) {
-        String indexDir = "/Users/zsq/lucene/index";  //mac pro path
-        String dataDir = "/Users/zsq/lucene/data";
+        String indexDir = "/Users/zsq/lucene/index";  //索引文件存放的路径
+        String dataDir = "/Users/zsq/lucene/data";    //要索引的 数据 文件路径
         Indexer indexer = null;
         int numIndex = 0;
         long start = System.currentTimeMillis();
