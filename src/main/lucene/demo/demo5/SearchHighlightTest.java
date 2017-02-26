@@ -75,7 +75,6 @@ public class SearchHighlightTest {
         for(ScoreDoc scoreDoc : hits.scoreDocs){
             doc = indexSearcher.doc(scoreDoc.doc);
             System.out.println(doc.get("city"));
-            //System.out.println(doc.get("desc"));
             String desc = doc.get("desc");
             if(desc != null){
                 tokenStream = analyzer.tokenStream("desc", new StringReader(desc));
