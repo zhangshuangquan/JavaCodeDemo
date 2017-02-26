@@ -27,7 +27,6 @@ public class IndexerType {
 
     private IndexWriter indexWriter;  //写索引
 
-
     /**
      * 初始化索引
      * @param indexDir
@@ -184,7 +183,6 @@ public class IndexerType {
         return content.toString().trim();
     }
 
-
     /**
      * 判断 文件 格式 转为 相应的文件
      * @param canonicalPath
@@ -208,7 +206,6 @@ public class IndexerType {
             return "";
         }
     }
-
 
     public static void main(String[] args) {
         String indexDir = "/Users/zsq/lucene/wordIndex";  //索引文件存放的路径
