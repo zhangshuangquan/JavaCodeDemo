@@ -127,7 +127,7 @@ public class OperateDocument {
     @Test
     public void testUpdate() throws IOException {
         IndexWriter writer = getWriter();
-        Document doc=new Document();
+        Document doc = new Document();
         // Field 子类 包括: StringField TextField DoubleField IntField 等等
         doc.add(new StringField("id", "1", Field.Store.YES));
         doc.add(new StringField("city","qingdao",Field.Store.YES));
