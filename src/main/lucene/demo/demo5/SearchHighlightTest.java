@@ -1,4 +1,4 @@
-package java1234.demo5;
+package demo.demo5;
 
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer;

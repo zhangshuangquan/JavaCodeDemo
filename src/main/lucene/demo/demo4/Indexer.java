@@ -1,4 +1,4 @@
-package java1234.demo4;
+package demo.demo4;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;

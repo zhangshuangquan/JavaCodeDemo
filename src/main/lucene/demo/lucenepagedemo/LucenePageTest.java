@@ -1,4 +1,4 @@
-package java1234.lucenepagedemo;
+package demo.lucenepagedemo;
 
 import org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer;
 import org.apache.lucene.document.Document;

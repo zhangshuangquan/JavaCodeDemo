@@ -1,4 +1,4 @@
-package java1234.lucenepagedemo;
+package demo.lucenepagedemo;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;

@@ -1,4 +1,4 @@
-package java1234.demo1;
+package demo.demo1;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -18,12 +18,12 @@ import java.nio.file.Paths;
  * Created by zsq on 2017/2/21.
  * lucene 的查询
  */
-public class Searcher {
+public class SearcherType {
 
 
     public static void main(String[] args) {
-        String indexDir = "/Users/zsq/lucene/index";
-        String q = "lucene";
+        String indexDir = "/Users/zsq/lucene/wordIndex";
+        String q = "南京";
         try {
             search(indexDir, q);
         } catch(Exception e) {
