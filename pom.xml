@@ -163,6 +163,13 @@
             <version>2012_u6</version>
         </dependency>
 
+        <!-- AnsjAnalyzer 分词-->
+        <dependency>
+            <groupId>org.ansj</groupId>
+            <artifactId>ansj_lucene6_plug</artifactId>
+            <version>5.1.1.0</version>
+        </dependency>
+
         <!-- poi 操作 -->
         <dependency>
             <groupId>org.apache.poi</groupId>
