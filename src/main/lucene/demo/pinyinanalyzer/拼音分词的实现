@@ -1,0 +1,22 @@
+1.首先我们我们需要把分词器分出来的中文词语转换为汉语拼音，
+java中汉字转拼音可以使用pinyin4j这个类库，当然icu4j也可以，但icu4j不支持多音字且类库jar包体积有10M多，
+所以我选择了pinyin4j,但pinyin4j支持多音字并不是说它能根据词语自动判断汉字读音，
+比如：重庆，pinyin4j会返回chongqing zhongqing,最终还是需要用户去人工选择正确的拼音的。pinyin4j也支持简拼的，
+所以拼音转换这方面没什么问题了。
+
+2.接下来要做的就是要把转换得到的拼音进行NGram处理，
+比如：王杰的汉语拼音是wangjie,如果要用户完整正确的输入wangjie才能搜到有关“王杰”的结果，那未免有点在考用户的汉语拼音基础知识，
+万一用户前鼻音和后鼻音不分怎么办，所以我们需要考虑前缀查询或模糊匹配，即用户只需要输入wan就能匹配到"王"字，这样做的目的其实还是为了减少用户操作步骤，
+用最少的操作步骤达到同样的目的，那必然是最讨人喜欢的。再比如“孙燕姿”汉语拼音是“sunyanzi”，如果我期望输入“yanz”也能搜到呢？
+这时候NGram就起作用啦，我们可以对“sunyanzi”进行NGram处理，假如NGram按2-4个长度进行切分，那得到的结果就是：
+su un ny ya an nz zi sun uny nya yan anz nzi suny unya nyan yanz anzi,
+这样用户输入yanz就能搜到了。但NGram只适合用户输入的搜索关键字比较短的情况下，
+因为如果用户输入的搜索关键字全是汉字且长度为20-30个，再转换为拼音，个数又要翻个5-6倍，
+再进行NGram又差不多翻了个10倍甚至更多，因为我们都知道BooleanQuery最多只能链接1024个Query，所以你懂的。
+分出来的Gram段会通过CharTermAttribute记录在原始Term的相同位置，跟同义词实现原理差不多。
+所以拼音搜索至关重要的是分词，即在分词阶段就把拼音进行NGram处理然后当作同义词存入
+CharTermAttribute中(这无疑也会增加索引体积，索引体积增大除了会额外多占点硬盘空间外，还会对索引重建性能以及搜索性能有所影响)，
+搜索阶段跟普通查询没什么区别。如果你不想因为NGram后Term数量太多影响搜索性能，你可以试试EdgeNGramTokenFilter进行前缀NGram,
+即NGram时永远从第一个字符开始切分，比如sunyanzi,按2-8个长度进行EdgeNGramTokenFilter
+处理后结果就是：su   sun   suny   sunya   sunyan  sunyanz   sunyanzi。这样处理可以减少Term数量，
+但弊端就是你输入yanzi就没法搜索到了(匹配粒度变粗了，没有NGram匹配粒度精确).

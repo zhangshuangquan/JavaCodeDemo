@@ -184,6 +184,13 @@
             <version>2.0.1</version>
         </dependency>
 
+        <!--拼音分词-->
+        <dependency>
+            <groupId>com.belerweb</groupId>
+            <artifactId>pinyin4j</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+
 
 
 

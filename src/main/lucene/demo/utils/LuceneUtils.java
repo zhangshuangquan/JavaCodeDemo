@@ -1,8 +1,8 @@
 package demo.utils;
 
 import demo.lucenepagedemo.Page;
-import org.ansj.lucene6.AnsjAnalyzer;
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.TextField;
@@ -32,7 +32,9 @@ public class LuceneUtils {
 
     private static final LuceneManager luceneManager = LuceneManager.getInstance();
 
-    private static Analyzer analyzer = new AnsjAnalyzer(AnsjAnalyzer.TYPE.query_ansj); //查询索引
+    //private static Analyzer analyzer = new AnsjAnalyzer(AnsjAnalyzer.TYPE.query_ansj); //查询索引
+
+    private static Analyzer analyzer = new SmartChineseAnalyzer();
 
     /**
      * 打开索引目录

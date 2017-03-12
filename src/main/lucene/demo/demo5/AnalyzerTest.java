@@ -36,4 +36,10 @@ public class AnalyzerTest {
             System.out.print(charTermAttribute.toString() + "|");
         }
     }
+
+    @Test
+    public void testCommunity() {
+        String str = "亲亲家园三期崇文坊";
+        System.out.println(str.contains("亲亲家园三期"));
+    }
 }
