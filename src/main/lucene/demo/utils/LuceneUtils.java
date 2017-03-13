@@ -34,7 +34,7 @@ public class LuceneUtils {
 
     //private static Analyzer analyzer = new AnsjAnalyzer(AnsjAnalyzer.TYPE.query_ansj); //查询索引
 
-    private static Analyzer analyzer = new SmartChineseAnalyzer();
+    public static Analyzer analyzer = new SmartChineseAnalyzer();
 
     /**
      * 打开索引目录

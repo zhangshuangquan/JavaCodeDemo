@@ -48,10 +48,26 @@ public class Indexer {
         Document doc;
         for(int i = 0;i < ids.length; i++){
             doc = new Document();
+            /***
+             *  StringField 和 TextField 区别
+             *  StringField 只索引不分词
+             *  TextField 不仅索引而且分词
+             *
+             *  要创建的索引字段, 字段的值(value) 不能为null
+             *
+             */
             doc.add(new TextField("id", ids[i].toString(), Field.Store.YES));
             doc.add(new StringField("city", citys[i], Field.Store.YES));
             doc.add(new TextField("desc", descs[i], Field.Store.YES));
             doc.add(new NumericDocValuesField("id", ids[i]));  //添加要排序的字段
+            //doc.add(new LongPoint("id", ids[i]));
+
+            /**
+             * 索引时 添加 排序字段 desc
+             * 再查询时 创建相应的 Sort 排序
+             */
+            //doc.add(new SortedDocValuesField("desc", new BytesRef(descs[i]))); SortedDocValuesField 排序
+           // Sort sort = new Sort(new SortField("category", SortField.Type.STRING), SortField.FIELD_SCORE);
             writer.addDocument(doc);
         }
         writer.close();
