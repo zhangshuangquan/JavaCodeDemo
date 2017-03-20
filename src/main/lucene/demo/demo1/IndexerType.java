@@ -86,7 +86,7 @@ public class IndexerType {
         }
         fileReader.close();*/
 
-        // 根据不同格式的文档 进行转换 为 字符
+        // 根据不同格式的文档 进行转换 为 字符, 再添加到文档中
         String contents = parseFileType(f.getCanonicalPath(), f.getName());
 
         //在文档对象中 写入 要索引的字段
@@ -95,6 +95,30 @@ public class IndexerType {
         doc.add(new TextField("fullPath", f.getCanonicalPath(), Field.Store.YES)); //文件全路径名
         doc.add(new SortedDocValuesField("fileName", new BytesRef(f.getName())));  //添加要排序的字段 字符型
         return doc;
+    }
+
+    /**
+     * 判断 文件 格式 转为 相应的文件
+     * @param canonicalPath 文件路径
+     * @param fileName 文件名
+     * @return
+     * @throws Exception
+     */
+    public static String parseFileType(String canonicalPath, String fileName) throws Exception {
+        System.out.println(canonicalPath+"-----"+fileName);
+        String suffix = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
+        System.out.println(suffix);
+        if ("doc".equals(suffix) || "docx".equals(suffix)) {
+            return readWord(canonicalPath);
+        } else if ("pdf".equals(suffix)) {
+            return readPDF(canonicalPath);
+        } else if ("html".equals(suffix) || "htm".equals(suffix)){
+            return readHtml(canonicalPath);
+        } else if ("txt".equals(suffix)) {
+            return readTXT(canonicalPath);
+        } else {
+            return "";
+        }
     }
 
     /**
@@ -165,7 +189,7 @@ public class IndexerType {
      * @param path
      * @return
      */
-    private static String readTXT(String path) {
+    public static String readTXT(String path) {
         StringBuffer content = new StringBuffer("");// 文档内容
         try {
             FileReader reader = new FileReader(path);
@@ -181,30 +205,6 @@ public class IndexerType {
             e.printStackTrace();
         }
         return content.toString().trim();
-    }
-
-    /**
-     * 判断 文件 格式 转为 相应的文件
-     * @param canonicalPath
-     * @param fileName
-     * @return
-     * @throws Exception
-     */
-    public static String parseFileType(String canonicalPath, String fileName) throws Exception {
-        System.out.println(canonicalPath+"-----"+fileName);
-        String suffix = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
-        System.out.println(suffix);
-        if ("doc".equals(suffix) || "docx".equals(suffix)) {
-            return readWord(canonicalPath);
-        } else if ("pdf".equals(suffix)) {
-            return readPDF(canonicalPath);
-        } else if ("html".equals(suffix) || "htm".equals(suffix)){
-            return readHtml(canonicalPath);
-        } else if ("txt".equals(suffix)) {
-            return readTXT(canonicalPath);
-        } else {
-            return "";
-        }
     }
 
     public static void main(String[] args) {

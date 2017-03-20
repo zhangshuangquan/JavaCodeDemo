@@ -41,16 +41,18 @@ public class Searcher {
         IndexReader indexReader = DirectoryReader.open(dir);  // 读索引对象
         IndexSearcher indexSearcher = new IndexSearcher(indexReader); //索引查询对象
         Analyzer analyzer = new StandardAnalyzer(); //建立标准分词器
+
         QueryParser queryParser = new QueryParser("contents", analyzer); //查询分析器
         Query query = queryParser.parse(q);  //对关键字的解析
         long start = System.currentTimeMillis();
 
         //排序
+        // sort 排序中的  sortField 字段中false 为升序, true 为降序
         Sort sort = new Sort();
-        sort.setSort(new SortField("fileName", SortField.Type.STRING, false));
+        sort.setSort(new SortField("fileName", SortField.Type.STRING, true));
         TopDocs hits = indexSearcher.search(query, 10, sort);
-
         //TopDocs hits = indexSearcher.search(query, 10);  //查询到的结果,返回前10
+
         long end = System.currentTimeMillis();
         System.out.println("查询关键字:"+q+" 消耗时间:"+(end-start)+" ms "+"命中个数:"+hits.totalHits);
         Document doc;
